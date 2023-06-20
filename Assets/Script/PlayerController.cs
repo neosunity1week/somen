@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -11,8 +12,8 @@ public class PlayerController : MonoBehaviour
         left,
     }
 
-    [SerializeField] private float forceSize;
-    public float gravitySize;
+    [Header("jump no ookisa")][SerializeField]  private float forceSize = 4.0f;
+    [Header("jyuuryoku no tsuyosa")] public float gravitySize = 700f;
     private Rigidbody2D rb;
     private Vector2 gravity;
 
