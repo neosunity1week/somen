@@ -17,6 +17,34 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 gravity;
 
+    /// <summary>
+    /// アニメーター.
+    /// </summary>
+    [SerializeField] private Animator _animator = default;
+
+    /// <summary>
+    /// アニメーションコントローラー.
+    /// </summary>
+    [SerializeField] private RuntimeAnimatorController AnimatorController = default;
+
+    /// <summary>
+    /// 三角巾.
+    /// </summary>
+    [SerializeField] private GameObject Sankaku = default;
+
+    /// <summary>
+    /// プレイ中か？
+    /// </summary>
+    /// <remarks>
+    /// プレイ中の場合、重力が有効になる.
+    /// </remarks>
+    private bool IsPlaying = default;
+
+    /// <summary>
+    /// アニメーター.
+    /// </summary>
+    public Animator Animator => _animator;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,6 +52,11 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        if (!IsPlaying)
+        {
+            return;
+        }
+        
         rb.AddForce(gravity * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -38,6 +71,24 @@ public class PlayerController : MonoBehaviour
             SetPlayerGravity(GravityDirection.left);
         }
     }
+
+    /// <summary>
+    /// プレイ中かどうかを設定する.
+    /// </summary>
+    /// <param name="value">設定する値.</param>
+    public void SetPlaying(bool value) => IsPlaying = value;
+
+    /// <summary>
+    /// アニメーションコントローラーを設定する.
+    /// </summary>
+    public void SetAnimationController() => Animator.runtimeAnimatorController = AnimatorController;
+
+    /// <summary>
+    /// 三角巾のアクティブ状態を変更する.
+    /// </summary>
+    /// <param name="active">設定するアクティブ状態.</param>
+    public void SetSankakuActive(bool active) => Sankaku.SetActive(active);
+    
     public void SetPlayerGravity(GravityDirection gravityDirection)
     {
         if(gravityDirection == GravityDirection.right)
