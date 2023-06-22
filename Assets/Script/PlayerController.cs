@@ -24,11 +24,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator _animator = default;
 
     /// <summary>
-    /// アニメーションコントローラー.
-    /// </summary>
-    [SerializeField] private RuntimeAnimatorController AnimatorController = default;
-
-    /// <summary>
     /// 三角巾.
     /// </summary>
     [SerializeField] private GameObject Sankaku = default;
@@ -82,7 +77,13 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// アニメーションコントローラーを設定する.
     /// </summary>
-    public void SetAnimationController() => Animator.runtimeAnimatorController = AnimatorController;
+    public void SetAnimationController(RuntimeAnimatorController animatorController) => 
+        Animator.runtimeAnimatorController = animatorController;
+
+    /// <summary>
+    /// アニメーションコントローラーをリセットする.
+    /// </summary>
+    public void ResetAnimationController() => Animator.runtimeAnimatorController = null;
 
     /// <summary>
     /// 三角巾のアクティブ状態を変更する.

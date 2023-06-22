@@ -1,14 +1,13 @@
 using UnityEngine;
-using UnityEngine.Playables;
 
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 /// <summary>
-/// 最初のアニメーション再生クラス.
+/// 最後のアニメーション再生クラス.
 /// </summary>
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     
-public sealed class Intro : MonoBehaviour
+public sealed class Outro : MonoBehaviour
 {
     //================================================================================
     // Definitions.
@@ -19,9 +18,9 @@ public sealed class Intro : MonoBehaviour
     /// </summary>
     private enum State : int
     {
-        Idle
-      , Intro
-      , Float
+        Neutral
+      , AnimationPlay
+      , AnimationPlaying
     }
 
     //================================================================================
@@ -34,29 +33,19 @@ public sealed class Intro : MonoBehaviour
     [SerializeField] private PlayerController Player = default;
 
     /// <summary>
-    /// タイムライン再生コンポーネント.
+    /// X座標を中央にする秒数.
     /// </summary>
-    [SerializeField] private PlayableDirector PlayableDirector = default;
+    [SerializeField] private float NeutralSeconds = 1.5f;
+
+    /// <summary>
+    /// X座標を中央にするカーブ.
+    /// </summary>
+    [SerializeField] private AnimationCurve NeutralCurve = default;
 
     /// <summary>
     /// プレイヤーのアニメーションコントローラー.
     /// </summary>
     [SerializeField] private RuntimeAnimatorController PlayerAnimationController = default;
-
-    /// <summary>
-    /// ゲーム中のプレイヤーの位置.
-    /// </summary>
-    [SerializeField] private Transform Locator = default;
-
-    /// <summary>
-    /// 上に移動する秒数.
-    /// </summary>
-    [SerializeField] private float FloatSeconds = 1.5f;
-
-    /// <summary>
-    /// 上に移動するカーブ.
-    /// </summary>
-    [SerializeField] private AnimationCurve FloatCurve = default;
 
     /// <summary>
     /// 現在のステート.
@@ -79,10 +68,10 @@ public sealed class Intro : MonoBehaviour
     private Vector3 To = default;
 
     /// <summary>
-    /// Scroll
+    /// 最後のアニメーションステートのハッシュ.
     /// </summary>
-    [SerializeField] private Scroll scroll;
-
+    private int LastStateHash = default;
+    
     //================================================================================
     // Methods.
     //================================================================================
@@ -94,22 +83,25 @@ public sealed class Intro : MonoBehaviour
     private void Start()
     {
         Player.SetPlaying(false);
-        SetState(State.Idle);
+        From = Player.transform.position;
+        To   = From;
+        To.x = 0.0f;
+        SetState(State.Neutral);
     }
 
     private void Update()
     {
-        if      (CurrentState == State.Idle)
+        if      (CurrentState == State.Neutral)
         {
-            IdleProcess();
+            NeutralProcess();
         }
-        else if (CurrentState == State.Intro)
+        else if (CurrentState == State.AnimationPlay)
         {
-            IntroProcess();
+            AnimationPlayProcess();
         }
-        else if (CurrentState == State.Float)
+        else if (CurrentState == State.AnimationPlaying)
         {
-            FloatProcess();
+            AnimationPlayingProcess();
         }
     }
 
@@ -120,52 +112,39 @@ public sealed class Intro : MonoBehaviour
     /// <summary>
     /// 入力待ち処理.
     /// </summary>
-    private void IdleProcess()
+    private void NeutralProcess()
     {
-        // どれかのキーが押されたら.
-        if (Input.anyKeyDown)
+        T = Mathf.Clamp01(T + Time.deltaTime / NeutralSeconds);
+        var ratio = NeutralCurve.Evaluate(T);
+        Player.transform.position = Vector3.Lerp(From, To, ratio);
+
+        if (T >= 1.0f)
         {
-            // アニメーションを再生する.
-            PlayableDirector.Play();
-            
-            SetState(State.Intro);
+            SetState(State.AnimationPlay);
         }
     }
 
     /// <summary>
     /// アニメーション処理.
     /// </summary>
-    private void IntroProcess()
+    private void AnimationPlayProcess()
     {
-        if (PlayableDirector.time >= PlayableDirector.duration)
-        {
-            // 三角巾を非表示にする.
-            Player.SetSankakuActive(false);
-            
-            // プレイヤーのアニメーションコントローラーを設定する.
-            // 落下アニメーションを再生するため.
-            Player.SetAnimationController(PlayerAnimationController);
-            
-            From = Vector3.zero;
-            To   = Locator.position;
-            SetState(State.Float);
-        }
+        Player.SetAnimationController(PlayerAnimationController);
+        Player.Animator.SetTrigger("Outro");
+        LastStateHash = Player.Animator.GetCurrentAnimatorStateInfo(0).fullPathHash;
+        SetState(State.AnimationPlaying);
     }
 
     /// <summary>
-    /// 上に移動する処理.
+    /// アニメーション処理.
     /// </summary>
-    private void FloatProcess()
+    private void AnimationPlayingProcess()
     {
-        T = Mathf.Clamp01(T + Time.deltaTime / FloatSeconds);
-        var ratio = FloatCurve.Evaluate(T);
-        Player.transform.position = Vector3.Lerp(From, To, ratio);
+        var currentAnimatorState = Player.Animator.GetCurrentAnimatorStateInfo(0);
 
-        if (T >= 1.0f)
+        if ((currentAnimatorState.fullPathHash != LastStateHash) || (currentAnimatorState.normalizedTime >= 1.0f))
         {
-            Player.SetPlaying(true);
             gameObject.SetActive(false);
-            scroll.ScrollStart();
         }
     }
 
