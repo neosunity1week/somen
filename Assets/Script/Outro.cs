@@ -49,6 +49,11 @@ public sealed class Outro : MonoBehaviour
     [SerializeField] private RuntimeAnimatorController PlayerAnimationController = default;
 
     /// <summary>
+    /// アニメーション後の待機秒数.
+    /// </summary>
+    [SerializeField] private float AfterWaitSeconds = 3.0f;
+
+    /// <summary>
     /// 遷移コントローラー.
     /// </summary>
     [SerializeField] private TransitionController TransitionController = default;
@@ -109,6 +114,10 @@ public sealed class Outro : MonoBehaviour
         {
             AnimationPlayingProcess();
         }
+        else if (CurrentState == State.Wait)
+        {
+            WaitProcess();
+        }
     }
 
     //--------------------------------------------------------------------------------
@@ -149,6 +158,22 @@ public sealed class Outro : MonoBehaviour
         var currentAnimatorState = Player.Animator.GetCurrentAnimatorStateInfo(0);
 
         if ((currentAnimatorState.fullPathHash != LastStateHash) || (currentAnimatorState.normalizedTime >= 1.0f))
+        {
+            T = 0.0f;
+            SetState(State.Wait);
+        }
+    }
+
+    /// <summary>
+    /// 待機処理.
+    /// </summary>
+    private void WaitProcess()
+    {
+        T = Mathf.Clamp01(T + Time.deltaTime / AfterWaitSeconds);
+        var ratio = NeutralCurve.Evaluate(T);
+        Player.transform.position = Vector3.Lerp(From, To, ratio);
+
+        if (T >= 1.0f)
         {
             TransitionController.Do();
             gameObject.SetActive(false);
