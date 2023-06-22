@@ -21,6 +21,7 @@ public sealed class Outro : MonoBehaviour
         Neutral
       , AnimationPlay
       , AnimationPlaying
+      , Wait
     }
 
     //================================================================================
@@ -46,6 +47,11 @@ public sealed class Outro : MonoBehaviour
     /// プレイヤーのアニメーションコントローラー.
     /// </summary>
     [SerializeField] private RuntimeAnimatorController PlayerAnimationController = default;
+
+    /// <summary>
+    /// 遷移コントローラー.
+    /// </summary>
+    [SerializeField] private TransitionController TransitionController = default;
 
     /// <summary>
     /// 現在のステート.
@@ -144,6 +150,7 @@ public sealed class Outro : MonoBehaviour
 
         if ((currentAnimatorState.fullPathHash != LastStateHash) || (currentAnimatorState.normalizedTime >= 1.0f))
         {
+            TransitionController.Do();
             gameObject.SetActive(false);
         }
     }

@@ -19,7 +19,8 @@ public sealed class Intro : MonoBehaviour
     /// </summary>
     private enum State : int
     {
-        Idle
+        None
+      , Idle
       , Intro
       , Float
     }
@@ -94,7 +95,6 @@ public sealed class Intro : MonoBehaviour
     private void Start()
     {
         Player.SetPlaying(false);
-        SetState(State.Idle);
     }
 
     private void Update()
@@ -111,6 +111,18 @@ public sealed class Intro : MonoBehaviour
         {
             FloatProcess();
         }
+    }
+
+    //--------------------------------------------------------------------------------
+    // Public methods.
+    //--------------------------------------------------------------------------------
+
+    /// <summary>
+    /// 最初のアニメーションを再生する.
+    /// </summary>
+    public void Play()
+    {
+        SetState(State.Idle);
     }
 
     //--------------------------------------------------------------------------------
