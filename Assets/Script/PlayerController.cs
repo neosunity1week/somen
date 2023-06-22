@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
 
@@ -99,5 +100,30 @@ public class PlayerController : MonoBehaviour
         {
             gravity = Vector2.left * gravitySize;
         }
+    }
+
+    private void OnBecameInvisible() => this.PlayerRespawn();
+
+    private float coolTime = 0.0f;
+    [SerializeField] private float coolTimeDuration = 0.0f;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        string tagName = collision.transform.tag;
+        if(tagName == "Cloud" && coolTime < Time.time)
+        {
+            PlayerRespawn();
+            coolTime = Time.time + coolTimeDuration;
+        }
+        else if(tagName == "Item")
+        {
+            GameObject item = collision.gameObject;
+            item.SetActive(false);
+        }
+    }
+    private void PlayerRespawn()
+    {
+        GetComponent<Animator>().SetTrigger("Hit");
+        transform.position = new Vector2(0, transform.position.y);
+        rb.velocity = Vector2.zero;
     }
 }

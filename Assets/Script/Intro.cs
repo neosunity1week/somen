@@ -72,7 +72,12 @@ public sealed class Intro : MonoBehaviour
     /// 移動時の移動後の位置.
     /// </summary>
     private Vector3 To = default;
-    
+
+    /// <summary>
+    /// Scroll
+    /// </summary>
+    [SerializeField] private Scroll scroll;
+
     //================================================================================
     // Methods.
     //================================================================================
@@ -155,6 +160,7 @@ public sealed class Intro : MonoBehaviour
         {
             Player.SetPlaying(true);
             gameObject.SetActive(false);
+            scroll.ScrollStart();
         }
     }
 
