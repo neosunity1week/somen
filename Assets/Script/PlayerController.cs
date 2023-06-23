@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
 
     private float coolTime = 0.0f;
     [SerializeField] private float coolTimeDuration = 0.0f;
+    [SerializeField] private ScoreManager score;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tagName = collision.transform.tag;
@@ -119,6 +120,7 @@ public class PlayerController : MonoBehaviour
         {
             GameObject item = collision.gameObject;
             item.SetActive(false);
+            score.AddScore(50);
         }
     }
     private void PlayerRespawn()
@@ -126,5 +128,6 @@ public class PlayerController : MonoBehaviour
         GetComponent<Animator>().SetTrigger("Hit");
         transform.position = new Vector2(0, transform.position.y);
         rb.velocity = Vector2.zero;
+        score.AddScore(-50);
     }
 }

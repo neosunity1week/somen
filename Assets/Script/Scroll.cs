@@ -9,11 +9,14 @@ public class Scroll : MonoBehaviour
     [SerializeField] private GameObject worldObject;
     [SerializeField] private GameObject absObject;
 
+    [SerializeField] private ScoreManager scoreManager;
+
     private bool isScroll;
 
     public void ScrollStart()
     {
         isScroll = true;
+        scoreManager.StartCount();
     }
 
     private void Update()
