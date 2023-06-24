@@ -714,8 +714,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802c14e086ff2c041a4df626bcc3cc62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  getItemClip: {fileID: 0}
-  jump: {fileID: 0}
+  getItemClip: {fileID: 8300000, guid: 0163cf531c630bf42b6f66263ad0d23d, type: 3}
+  jump: {fileID: 8300000, guid: 95e4b0a8689ed8349959204d4fcb634c, type: 3}
+  damage: {fileID: 8300000, guid: 6c51be9b5341b61428b329b57e730c21, type: 3}
+  volume: 1
 --- !u!4 &559193297
 Transform:
   m_ObjectHideFlags: 0
@@ -1105,6 +1107,7 @@ MonoBehaviour:
   gravitySize: 700
   _animator: {fileID: 709891264}
   Sankaku: {fileID: 2045568317}
+  audioManager: {fileID: 559193296}
   coolTimeDuration: 3
   score: {fileID: 838548658}
 --- !u!212 &709891263

@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public Animator Animator => _animator;
 
+    [SerializeField] private AudioManager audioManager;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = new Vector2(Mathf.Sign(gravity.x) * -1 * forceSize,0);
+            audioManager.Jump();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -108,6 +111,7 @@ public class PlayerController : MonoBehaviour
     private float coolTime = 0.0f;
     [SerializeField] private float coolTimeDuration = 0.0f;
     [SerializeField] private ScoreManager score;
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tagName = collision.transform.tag;
@@ -121,10 +125,12 @@ public class PlayerController : MonoBehaviour
             GameObject item = collision.gameObject;
             item.SetActive(false);
             score.AddScore(50);
+            audioManager.ItemGet();
         }
     }
     private void PlayerRespawn()
     {
+        audioManager.Damage();
         GetComponent<Animator>().SetTrigger("Hit");
         transform.position = new Vector2(0, transform.position.y);
         rb.velocity = Vector2.zero;
