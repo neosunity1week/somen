@@ -60,6 +60,11 @@ public sealed class Intro : MonoBehaviour
     [SerializeField] private AnimationCurve FloatCurve = default;
 
     /// <summary>
+    /// 雲のオブジェクト.
+    /// </summary>
+    [SerializeField] private GameObject Clouds = default;
+
+    /// <summary>
     /// 現在のステート.
     /// </summary>
     private State CurrentState = default;
@@ -175,6 +180,7 @@ public sealed class Intro : MonoBehaviour
 
         if (T >= 1.0f)
         {
+            Clouds.SetActive(false);
             Player.SetPlaying(true);
             gameObject.SetActive(false);
             scroll.ScrollStart();
