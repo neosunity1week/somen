@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        SetPlayerGravity(GravityDirection.right);
     }
     private void Update()
     {
