@@ -19,6 +19,7 @@ public class Scroll : MonoBehaviour
     [SerializeField] private GameObject absObject_EndPoint;
 
     [SerializeField] private ScoreManager scoreManager;
+    [SerializeField] private GameObject outro;
     private bool isScroll;
 
     private void Start()
@@ -31,6 +32,7 @@ public class Scroll : MonoBehaviour
     {
         isScroll = true;
         scoreManager.StartCount();
+        Invoke(nameof(this.OutroStart),absObjectScrollTime);
     }
 
     private void Update()
@@ -40,5 +42,9 @@ public class Scroll : MonoBehaviour
             worldObject.transform.Translate(0, worldObjectScrollSpeed * Time.deltaTime, 0);
             absObject.transform.Translate(0, absObjectScrollSpeed * Time.deltaTime, 0);
         }
+    }
+    public void OutroStart()
+    {
+        outro.SetActive(true);
     }
 }
