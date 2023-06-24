@@ -31,7 +31,7 @@ Transform:
   m_Children:
   - {fileID: 2851237053188509130}
   - {fileID: 1842300276817524058}
-  - {fileID: 7339163243604072182}
+  - {fileID: 8154381935771208455}
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -55,8 +55,12 @@ PlayableDirector:
   - key: {fileID: -1311539416552714304, guid: 8c90cf371e675c6499f5f0f86ed7673d, type: 2}
     value: {fileID: 2214533659866593207}
   - key: {fileID: -7473450554398688757, guid: 8c90cf371e675c6499f5f0f86ed7673d, type: 2}
-    value: {fileID: 7339163243604072183}
+    value: {fileID: 8502971866379504106}
   - key: {fileID: 5473925945206875658, guid: 8c90cf371e675c6499f5f0f86ed7673d, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8140037839841141187, guid: 8c90cf371e675c6499f5f0f86ed7673d, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -6158721613512742979, guid: 8c90cf371e675c6499f5f0f86ed7673d, type: 2}
     value: {fileID: 0}
   m_ExposedReferences:
     m_References: []
@@ -263,12 +267,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5e013c12d3ad524d90440e0e04bf744, type: 3}
---- !u!4 &7339163243604072182 stripped
+--- !u!4 &8154381935771208455 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1509793564213550578, guid: e5e013c12d3ad524d90440e0e04bf744, type: 3}
   m_PrefabInstance: {fileID: 7339163243604072181}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &7339163243604072183 stripped
+--- !u!95 &8502971866379504106 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 1430295068822937375, guid: e5e013c12d3ad524d90440e0e04bf744, type: 3}
   m_PrefabInstance: {fileID: 7339163243604072181}
