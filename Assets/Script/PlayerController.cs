@@ -67,9 +67,9 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.AddForce(gravity * Time.deltaTime);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            rb.velocity = new Vector2(Mathf.Sign(gravity.x) * -1 * forceSize, 0);
+            rb.velocity = new Vector2(Math.Sign(gravity.x) * -1 * forceSize, 0);
             audioManager.Jump();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
