@@ -1334,6 +1334,9 @@ MonoBehaviour:
   Sankaku: {fileID: 2045568317}
   GravityChangeNoticeRightToLeft: {fileID: 2064050121}
   GravityChangeNoticeLeftToRight: {fileID: 1585193919}
+  GravityChangeNoticeAnimationSpeedMultiplierMin: 1
+  GravityChangeNoticeAnimationSpeedMultiplierMax: 4
+  Scroll: {fileID: 1619049207}
   audioManager: {fileID: 559193296}
   coolTimeDuration: 3
   score: {fileID: 838548658}
@@ -3188,6 +3191,14 @@ PrefabInstance:
       propertyPath: Locator
       value: 
       objectReference: {fileID: 786642031}
+    - target: {fileID: 4724674197202408099, guid: 61f422ad972ccec4b9885ec3b048765f, type: 3}
+      propertyPath: m_SceneBindings.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724674197202408099, guid: 61f422ad972ccec4b9885ec3b048765f, type: 3}
+      propertyPath: m_SceneBindings.Array.data[5].key
+      value: 
+      objectReference: {fileID: 8544192492320518403, guid: 3b00a8abc8585414bba083113fcac8e3, type: 2}
     - target: {fileID: 4724674197202408099, guid: 61f422ad972ccec4b9885ec3b048765f, type: 3}
       propertyPath: m_SceneBindings.Array.data[0].value
       value: 

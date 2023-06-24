@@ -41,6 +41,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayableDirector GravityChangeNoticeLeftToRight = default;
 
     /// <summary>
+    /// 重力が変更されることを通知するアニメーションの再生速度の倍数の最小値.
+    /// </summary>
+    [SerializeField] private float GravityChangeNoticeAnimationSpeedMultiplierMin = 1.0f;
+
+    /// <summary>
+    /// 重力が変更されることを通知するアニメーションの再生速度の倍数の最大値.
+    /// </summary>
+    [SerializeField] private float GravityChangeNoticeAnimationSpeedMultiplierMax = 2.0f;
+
+    /// <summary>
+    /// スクロール処理クラス.
+    /// </summary>
+    [SerializeField] private Scroll Scroll = default;
+
+    /// <summary>
     /// プレイ中か？
     /// </summary>
     /// <remarks>
@@ -167,15 +182,24 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void PlayChangeNoticeAnimation()
     {
+        // スクロールの進捗度によって再生速度を変更する.
+        var speedMultiplier = Mathf.Lerp(
+            GravityChangeNoticeAnimationSpeedMultiplierMin
+          , GravityChangeNoticeAnimationSpeedMultiplierMax
+          , Scroll.Ratio
+        );
+        
         // 重力が左にかかっているなら.
         if (gravity.x < 0.0f)
         {
             GravityChangeNoticeLeftToRight.Play();
+            GravityChangeNoticeLeftToRight.playableGraph.GetRootPlayable(0).SetSpeed(speedMultiplier);
         }
         // 重力が右にかかっているなら.
         else
         {
             GravityChangeNoticeRightToLeft.Play();
+            GravityChangeNoticeRightToLeft.playableGraph.GetRootPlayable(0).SetSpeed(speedMultiplier);
         }
     }
 
