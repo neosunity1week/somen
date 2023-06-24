@@ -155,8 +155,6 @@ public class PlayerController : MonoBehaviour
         {
             PlayerRespawn();
             coolTime = Time.time + coolTimeDuration;
-
-            TryPlayGravityChangeNoticeAnimation();
         }
         else if (tagName == "Item")
         {
@@ -164,6 +162,10 @@ public class PlayerController : MonoBehaviour
             item.SetActive(false);
             score.AddScore(50);
             audioManager.ItemGet();
+        }
+        else if (tagName == "GravityChange")
+        {
+            TryPlayGravityChangeNoticeAnimation();
         }
     }
     private void PlayerRespawn()

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cloud
   - Item
+  - GravityChange
   layers:
   - Default
   - TransparentFX
