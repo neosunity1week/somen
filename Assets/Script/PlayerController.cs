@@ -125,10 +125,12 @@ public class PlayerController : MonoBehaviour
         if (gravityDirection == GravityDirection.right)
         {
             gravity = Vector2.right * gravitySize;
+            GetComponent<SpriteRenderer>().flipX = true;
         }
         else if (gravityDirection == GravityDirection.left)
         {
             gravity = Vector2.left * gravitySize;
+            GetComponent<SpriteRenderer>().flipX = false;
         }
     }
 
