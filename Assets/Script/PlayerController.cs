@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Playables;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,6 +29,16 @@ public class PlayerController : MonoBehaviour
     /// 三角巾.
     /// </summary>
     [SerializeField] private GameObject Sankaku = default;
+
+    /// <summary>
+    /// 右から左に重力が変更されることを通知するアニメーション.
+    /// </summary>
+    [SerializeField] private PlayableDirector GravityChangeNoticeRightToLeft = default;
+
+    /// <summary>
+    /// 左から右に重力が変更されることを通知するアニメーション.
+    /// </summary>
+    [SerializeField] private PlayableDirector GravityChangeNoticeLeftToRight = default;
 
     /// <summary>
     /// プレイ中か？
@@ -106,6 +118,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 重力を左に変更する.
+    /// </summary>
+    public void ChangeToLeftGravity() => SetPlayerGravity(GravityDirection.left);
+
+    /// <summary>
+    /// 重力を右に変更する.
+    /// </summary>
+    public void ChangeToRightGravity() => SetPlayerGravity(GravityDirection.right);
+
     private void OnBecameInvisible() => this.PlayerRespawn();
 
     private float coolTime = 0.0f;
@@ -119,6 +141,8 @@ public class PlayerController : MonoBehaviour
         {
             PlayerRespawn();
             coolTime = Time.time + coolTimeDuration;
+
+            TryPlayGravityChangeNoticeAnimation();
         }
         else if(tagName == "Item")
         {
@@ -135,5 +159,44 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector2(0, transform.position.y);
         rb.velocity = Vector2.zero;
         score.AddScore(-50);
+    }
+
+    /// <summary>
+    /// 重力変更を通知するアニメーションの再生を試みる.
+    /// </summary>
+    /// <returns>再生できたら、trueを返す.</returns>
+    private bool TryPlayGravityChangeNoticeAnimation()
+    {
+        if (IsChangeNoticeAnimationPlaying())
+        {
+            // すでに再生中.
+            return false;
+        }
+        PlayChangeNoticeAnimation();
+
+        return true;
+        
+        /// <summary>
+        /// 重力変更を通知するアニメーションが再生中か？
+        /// </summary>
+        bool IsChangeNoticeAnimationPlaying() => (GravityChangeNoticeRightToLeft.state == PlayState.Playing) ||
+                                                 (GravityChangeNoticeLeftToRight.state == PlayState.Playing);
+
+        /// <summary>
+        /// 重力変更を通知するアニメーション再生する.
+        /// </summary>
+        void PlayChangeNoticeAnimation()
+        {
+            // 重力が左にかかっているなら.
+            if (gravity.x < 0.0f)
+            {
+                GravityChangeNoticeLeftToRight.Play();
+            }
+            // 重力が右にかかっているなら.
+            else
+            {
+                GravityChangeNoticeRightToLeft.Play();
+            }
+        }
     }
 }
