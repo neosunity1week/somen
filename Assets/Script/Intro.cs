@@ -105,6 +105,11 @@ public sealed class Intro : MonoBehaviour
     /// </summary>
     [SerializeField] private Scroll scroll;
 
+    /// <summary>
+    /// スタート画面の文字
+    /// </summary>
+    [SerializeField] private GameObject texts;
+
     //================================================================================
     // Methods.
     //================================================================================
@@ -163,6 +168,7 @@ public sealed class Intro : MonoBehaviour
         if (Input.anyKeyDown)
         {
             FromVolume = AudioSource.volume;
+            texts.SetActive(false);
             SetState(State.Fade);
         }
     }
