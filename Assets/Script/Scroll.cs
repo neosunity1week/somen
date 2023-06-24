@@ -58,5 +58,6 @@ public class Scroll : MonoBehaviour
     {
         outro.SetActive(true);
         isScroll = false;
+        scoreManager.StopCount();
     }
 }

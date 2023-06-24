@@ -23,6 +23,11 @@ public class ScoreManager : MonoBehaviour
     {
         isStart = true;
     }
+    public void StopCount()
+    {
+        isStart = false;
+        text.text = "";
+    }
 
     private float elipsedTime;
     private void Update()
