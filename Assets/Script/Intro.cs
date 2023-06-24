@@ -21,6 +21,7 @@ public sealed class Intro : MonoBehaviour
     {
         None
       , Idle
+      , Fade
       , Intro
       , Float
     }
@@ -33,6 +34,16 @@ public sealed class Intro : MonoBehaviour
     /// プレイヤー.
     /// </summary>
     [SerializeField] private PlayerController Player = default;
+
+    /// <summary>
+    /// タイトル画面BGMのソース.
+    /// </summary>
+    [SerializeField] private AudioSource AudioSource = default;
+
+    /// <summary>
+    /// タイトル画面BGMのフェードアウトの秒数.
+    /// </summary>
+    [SerializeField] private float FadeSeconds = 1.5f;
 
     /// <summary>
     /// タイムライン再生コンポーネント.
@@ -75,14 +86,19 @@ public sealed class Intro : MonoBehaviour
     private float T = default;
 
     /// <summary>
+    /// フェードアウト前の音量.
+    /// </summary>
+    private float FromVolume = default;
+
+    /// <summary>
     /// 移動時の移動前の位置.
     /// </summary>
-    private Vector3 From = default;
+    private Vector3 FromPosition = default;
 
     /// <summary>
     /// 移動時の移動後の位置.
     /// </summary>
-    private Vector3 To = default;
+    private Vector3 ToPosition = default;
 
     /// <summary>
     /// Scroll
@@ -107,6 +123,10 @@ public sealed class Intro : MonoBehaviour
         if      (CurrentState == State.Idle)
         {
             IdleProcess();
+        }
+        else if (CurrentState == State.Fade)
+        {
+            FadeProcess();
         }
         else if (CurrentState == State.Intro)
         {
@@ -142,6 +162,23 @@ public sealed class Intro : MonoBehaviour
         // どれかのキーが押されたら.
         if (Input.anyKeyDown)
         {
+            FromVolume = AudioSource.volume;
+            SetState(State.Fade);
+        }
+    }
+
+    /// <summary>
+    /// タイトル画面BGMフェードアウト処理.
+    /// </summary>
+    private void FadeProcess()
+    {
+        T                  = Mathf.Clamp01(T + Time.deltaTime / FadeSeconds);
+        AudioSource.volume = Mathf.Lerp(FromVolume, 0.0f, T);
+
+        if (T >= 1.0f)
+        {
+            T = 0.0f;
+            
             // アニメーションを再生する.
             PlayableDirector.Play();
             
@@ -163,8 +200,8 @@ public sealed class Intro : MonoBehaviour
             // 落下アニメーションを再生するため.
             Player.SetAnimationController(PlayerAnimationController);
             
-            From = Vector3.zero;
-            To   = Locator.position;
+            FromPosition = Vector3.zero;
+            ToPosition   = Locator.position;
             SetState(State.Float);
         }
     }
@@ -176,7 +213,7 @@ public sealed class Intro : MonoBehaviour
     {
         T = Mathf.Clamp01(T + Time.deltaTime / FloatSeconds);
         var ratio = FloatCurve.Evaluate(T);
-        Player.transform.position = Vector3.Lerp(From, To, ratio);
+        Player.transform.position = Vector3.Lerp(FromPosition, ToPosition, ratio);
 
         if (T >= 1.0f)
         {
