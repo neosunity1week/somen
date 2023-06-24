@@ -57,5 +57,6 @@ public class Scroll : MonoBehaviour
     public void OutroStart()
     {
         outro.SetActive(true);
+        isScroll = false;
     }
 }
