@@ -219,6 +219,7 @@ public sealed class Intro : MonoBehaviour
         {
             Clouds.SetActive(false);
             Player.SetPlaying(true);
+            Player.PlayChangeNoticeAnimation();
             gameObject.SetActive(false);
             scroll.ScrollStart();
         }

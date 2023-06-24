@@ -163,6 +163,23 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// 重力変更を通知するアニメーション再生する.
+    /// </summary>
+    public void PlayChangeNoticeAnimation()
+    {
+        // 重力が左にかかっているなら.
+        if (gravity.x < 0.0f)
+        {
+            GravityChangeNoticeLeftToRight.Play();
+        }
+        // 重力が右にかかっているなら.
+        else
+        {
+            GravityChangeNoticeRightToLeft.Play();
+        }
+    }
+
+    /// <summary>
     /// 重力変更を通知するアニメーションの再生を試みる.
     /// </summary>
     /// <returns>再生できたら、trueを返す.</returns>
@@ -182,23 +199,6 @@ public class PlayerController : MonoBehaviour
         /// </summary>
         bool IsChangeNoticeAnimationPlaying() => (GravityChangeNoticeRightToLeft.state == PlayState.Playing) ||
                                                  (GravityChangeNoticeLeftToRight.state == PlayState.Playing);
-
-        /// <summary>
-        /// 重力変更を通知するアニメーション再生する.
-        /// </summary>
-        void PlayChangeNoticeAnimation()
-        {
-            // 重力が左にかかっているなら.
-            if (gravity.x < 0.0f)
-            {
-                GravityChangeNoticeLeftToRight.Play();
-            }
-            // 重力が右にかかっているなら.
-            else
-            {
-                GravityChangeNoticeRightToLeft.Play();
-            }
-        }
     }
 
     private IEnumerator Flash(Animator animator, float seconds)
