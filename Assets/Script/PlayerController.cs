@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
         left,
     }
 
-    [Header("jump no ookisa")][SerializeField]  private float forceSize = 4.0f;
+    [Header("jump no ookisa")][SerializeField] private float forceSize = 4.0f;
     [Header("jyuuryoku no tsuyosa")] public float gravitySize = 700f;
     private Rigidbody2D rb;
     private Vector2 gravity;
@@ -54,11 +54,11 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        
+
         rb.AddForce(gravity * Time.deltaTime);
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.velocity = new Vector2(Mathf.Sign(gravity.x) * -1 * forceSize,0);
+            rb.velocity = new Vector2(Mathf.Sign(gravity.x) * -1 * forceSize, 0);
             audioManager.Jump();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// アニメーションコントローラーを設定する.
     /// </summary>
-    public void SetAnimationController(RuntimeAnimatorController animatorController) => 
+    public void SetAnimationController(RuntimeAnimatorController animatorController) =>
         Animator.runtimeAnimatorController = animatorController;
 
     /// <summary>
@@ -93,14 +93,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     /// <param name="active">設定するアクティブ状態.</param>
     public void SetSankakuActive(bool active) => Sankaku.SetActive(active);
-    
+
     public void SetPlayerGravity(GravityDirection gravityDirection)
     {
-        if(gravityDirection == GravityDirection.right)
+        if (gravityDirection == GravityDirection.right)
         {
             gravity = Vector2.right * gravitySize;
         }
-        else if(gravityDirection == GravityDirection.left)
+        else if (gravityDirection == GravityDirection.left)
         {
             gravity = Vector2.left * gravitySize;
         }
@@ -111,16 +111,16 @@ public class PlayerController : MonoBehaviour
     private float coolTime = 0.0f;
     [SerializeField] private float coolTimeDuration = 0.0f;
     [SerializeField] private ScoreManager score;
-    
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tagName = collision.transform.tag;
-        if(tagName == "Cloud" && coolTime < Time.time)
+        if (tagName == "Cloud" && coolTime < Time.time)
         {
             PlayerRespawn();
             coolTime = Time.time + coolTimeDuration;
         }
-        else if(tagName == "Item")
+        else if (tagName == "Item")
         {
             GameObject item = collision.gameObject;
             item.SetActive(false);
@@ -131,9 +131,18 @@ public class PlayerController : MonoBehaviour
     private void PlayerRespawn()
     {
         audioManager.Damage();
-        GetComponent<Animator>().SetTrigger("Hit");
+        Animator anim = GetComponent<Animator>();
+        anim.SetTrigger("Hit");
+        StartCoroutine(Flash(anim, coolTimeDuration));
         transform.position = new Vector2(0, transform.position.y);
         rb.velocity = Vector2.zero;
         score.AddScore(-50);
+    }
+    private IEnumerator Flash(Animator animator, float seconds)
+    {
+        Debug.Log("call");
+        animator.SetBool("Flash",true);
+        yield return new WaitForSeconds(seconds);
+        animator.SetBool("Flash", false);
     }
 }
