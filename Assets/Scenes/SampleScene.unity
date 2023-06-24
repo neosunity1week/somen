@@ -2307,8 +2307,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfb5c93ae1c2d47479fe808e1563fc92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldObjectScrollTime: 90
-  absObjectScrollTime: 90
+  worldObjectScrollTime: 150
+  absObjectScrollTime: 200
   worldObject: {fileID: 1995363960}
   worldObject_StartPoiny: {fileID: 641047219}
   worldObject_EndPoint: {fileID: 920606860}
@@ -2903,7 +2903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2087992457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -4.528, z: 0}
+  m_LocalPosition: {x: 0, y: -4.52, z: 0}
   m_LocalScale: {x: 0.16000001, y: 0.16000001, z: 1.6}
   m_ConstrainProportionsScale: 1
   m_Children:
