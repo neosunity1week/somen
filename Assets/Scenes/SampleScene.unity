@@ -4515,7 +4515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 299c52f31b2a85243adb3eff7873debd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceSize: 4
+  forceSize: 5
   gravitySize: 700
   _animator: {fileID: 709891264}
   Sankaku: {fileID: 2045568317}
