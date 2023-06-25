@@ -2961,7 +2961,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   getItemClip: {fileID: 8300000, guid: 0163cf531c630bf42b6f66263ad0d23d, type: 3}
-  jump: {fileID: 8300000, guid: 95e4b0a8689ed8349959204d4fcb634c, type: 3}
+  jump: {fileID: 8300000, guid: d93cf4264ca8c8046826f4a8af60b77b, type: 3}
   damage: {fileID: 8300000, guid: 6c51be9b5341b61428b329b57e730c21, type: 3}
   volume: 1
 --- !u!4 &559193297
@@ -11157,7 +11157,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1651100635
 Transform:
   m_ObjectHideFlags: 0
