@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -175,7 +176,7 @@ public sealed class Outro : MonoBehaviour
 
         if (T >= 1.0f)
         {
-            TransitionController.Do();
+            SceneManager.LoadScene("Result", LoadSceneMode.Additive);
             gameObject.SetActive(false);
         }
     }
