@@ -160,9 +160,7 @@ public class PlayerController : MonoBehaviour
         string tagName = collision.transform.tag;
         if (tagName == "Cloud" && coolTime < Time.time)
         {
-            //Hennnatori
-            //PlayerRespawn();
-            PlayerRespawnTest();
+            PlayerRespawn();
             coolTime = Time.time + coolTimeDuration;
         }
         else if (tagName == "Item")
@@ -177,24 +175,8 @@ public class PlayerController : MonoBehaviour
             TryPlayGravityChangeNoticeAnimation();
         }
     }
-    private void PlayerRespawn()
-    {
-        if (!IsPlaying)
-        {
-            return;
-        }
-        
-        audioManager.Damage();
-        Animator anim = GetComponent<Animator>();
-        anim.SetTrigger("Hit");
-        StartCoroutine(Flash(anim, coolTimeDuration));
-        transform.position = new Vector2(0, transform.position.y);
-        rb.velocity = Vector2.zero;
-        score.AddScore(-50);
-    }
 
-    //Hennnatori
-    private void PlayerRespawnTest()
+    private void PlayerRespawn()
     {
         if (!IsPlaying)
         {
