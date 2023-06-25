@@ -35,6 +35,7 @@ public class ScoreManager : MonoBehaviour
     public void StartCount()
     {
         isStart = true;
+        score = 0;
     }
     public void StopCount()
     {
