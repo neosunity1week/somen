@@ -144,7 +144,21 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void ChangeToRightGravity() => SetPlayerGravity(GravityDirection.right);
 
-    private void OnBecameInvisible() => this.PlayerRespawn();
+    private void OnBecameInvisible()
+    {
+        if (!IsPlaying)
+        {
+            return;
+        }
+        
+        audioManager.Damage();
+        Animator anim = GetComponent<Animator>();
+        anim.SetTrigger("Hit");
+        StartCoroutine(Flash(anim, coolTimeDuration));
+        transform.position = new Vector2(0, transform.position.y);
+        rb.velocity        = Vector2.zero;
+        score.AddScore(-50);
+    }
 
     private float coolTime = 0.0f;
     [SerializeField] private float coolTimeDuration = 0.0f;
@@ -160,7 +174,7 @@ public class PlayerController : MonoBehaviour
         string tagName = collision.transform.tag;
         if (tagName == "Cloud" && coolTime < Time.time)
         {
-            PlayerRespawn();
+            OnHitCloud();
             coolTime = Time.time + coolTimeDuration;
         }
         else if (tagName == "Item")
@@ -176,7 +190,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void PlayerRespawn()
+    private void OnHitCloud()
     {
         if (!IsPlaying)
         {
