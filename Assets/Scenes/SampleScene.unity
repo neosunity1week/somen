@@ -11367,7 +11367,7 @@ MonoBehaviour:
   absObject_EndPoint: {fileID: 920606860}
   scoreManager: {fileID: 838548658}
   outro: {fileID: 1334156448}
-  audioManager: {fileID: 0}
+  audioManager: {fileID: 559193296}
 --- !u!1001 &1625314698
 PrefabInstance:
   m_ObjectHideFlags: 0
