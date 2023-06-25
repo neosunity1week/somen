@@ -171,6 +171,7 @@ public sealed class Intro : MonoBehaviour
             FromVolume = AudioSource.volume;
             texts.SetActive(false);
             SetState(State.Fade);
+            audioManager.PressStart();
         }
     }
 

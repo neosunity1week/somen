@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip getItemClip;
     [SerializeField] private AudioClip jump;
     [SerializeField] private AudioClip damage;
+    [SerializeField] private AudioClip kettei;
 
     [SerializeField] private float volume;
 
@@ -30,6 +31,8 @@ public class AudioManager : MonoBehaviour
         bgm.SetActive(false);
         environment.SetActive(false);
     }
+
+    public void PressStart() => m_AudioSource.PlayOneShot(kettei, volume);
 
     public void ItemGet() => m_AudioSource.PlayOneShot(getItemClip,volume);
 
