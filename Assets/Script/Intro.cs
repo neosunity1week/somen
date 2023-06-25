@@ -104,6 +104,7 @@ public sealed class Intro : MonoBehaviour
     /// Scroll
     /// </summary>
     [SerializeField] private Scroll scroll;
+    [SerializeField] private AudioManager audioManager;
 
     /// <summary>
     /// スタート画面の文字
@@ -170,6 +171,7 @@ public sealed class Intro : MonoBehaviour
             FromVolume = AudioSource.volume;
             texts.SetActive(false);
             SetState(State.Fade);
+            audioManager.PressStart();
         }
     }
 
@@ -228,6 +230,7 @@ public sealed class Intro : MonoBehaviour
             Player.PlayChangeNoticeAnimation();
             gameObject.SetActive(false);
             scroll.ScrollStart();
+            audioManager.GameStart();
         }
     }
 

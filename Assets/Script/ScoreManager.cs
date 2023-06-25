@@ -10,8 +10,13 @@ using unityroom.Api;
 public class ScoreManager : MonoBehaviour
 {
     private bool isStart = false;
-    [NonSerialized] public int score;
+    [NonSerialized] public static int score;
     [SerializeField] private TextMeshProUGUI text;
+
+    private void Start()
+    {
+        
+    }
 
     public void AddScore(int amount)
     {
