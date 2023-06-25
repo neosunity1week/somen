@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using System;
 
+using unityroom.Api;
+
+
 public class ScoreManager : MonoBehaviour
 {
     private bool isStart = false;
@@ -27,6 +30,14 @@ public class ScoreManager : MonoBehaviour
     {
         isStart = false;
         text.text = "";
+    }
+
+    /// <summary>
+    /// ランキングにスコアを送信する.
+    /// </summary>
+    public void SendScore()
+    {
+        UnityroomApiClient.Instance.SendScore(1, score, ScoreboardWriteMode.HighScoreDesc);
     }
 
     private float elipsedTime;
