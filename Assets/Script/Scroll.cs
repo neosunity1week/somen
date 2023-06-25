@@ -20,6 +20,7 @@ public class Scroll : MonoBehaviour
 
     [SerializeField] private ScoreManager scoreManager;
     [SerializeField] private GameObject outro;
+    [SerializeField] private AudioManager audioManager;
     private bool isScroll;
 
     /// <summary>
@@ -58,7 +59,9 @@ public class Scroll : MonoBehaviour
     {
         outro.SetActive(true);
         isScroll = false;
+
         scoreManager.StopCount();
         scoreManager.SendScore();
+        audioManager.StopGame();
     }
 }
