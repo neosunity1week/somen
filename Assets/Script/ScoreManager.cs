@@ -18,6 +18,11 @@ public class ScoreManager : MonoBehaviour
         
     }
 
+    public static int GetScore()
+    {
+        return score;
+    }
+
     public void AddScore(int amount)
     {
         score += amount;

@@ -152,6 +152,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!IsPlaying)
+        {
+            return;
+        }
+        
         string tagName = collision.transform.tag;
         if (tagName == "Cloud" && coolTime < Time.time)
         {
@@ -172,6 +177,11 @@ public class PlayerController : MonoBehaviour
     }
     private void PlayerRespawn()
     {
+        if (!IsPlaying)
+        {
+            return;
+        }
+        
         audioManager.Damage();
         Animator anim = GetComponent<Animator>();
         anim.SetTrigger("Hit");
