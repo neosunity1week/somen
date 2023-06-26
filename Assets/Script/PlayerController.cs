@@ -87,14 +87,14 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(Math.Sign(gravity.x) * -1 * forceSize, 0);
             audioManager.Jump();
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        /*if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             SetPlayerGravity(GravityDirection.right);
         }
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             SetPlayerGravity(GravityDirection.left);
-        }
+        }*/
     }
 
     /// <summary>
